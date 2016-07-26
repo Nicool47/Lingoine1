@@ -18,7 +18,6 @@ namespace Lingoine1.Models
     {
         [Key, ForeignKey("UserTable"), Column(Order = 1)]
         public string UserEmailId { get; set; }
-
         [Key, ForeignKey("LanguageTable"), Column(Order = 2)]
         public int LanguageId { get; set; }
         public int ProficiencyLevel { get; set; }

@@ -77,12 +77,12 @@
     <FunctionImport Name="Normal_UserAssign">
       <Parameter Name="LearnerEmail" Mode="In" Type="String" />
       <Parameter Name="LName" Mode="In" Type="String" />
-      <Parameter Name="NTeacherEmail" Mode="InOut" Type="String" />
+      <Parameter Name="NTeacherSkype" Mode="InOut" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_AssignTeacher">
       <Parameter Name="LearnerEmail" Mode="In" Type="String" />
       <Parameter Name="LName" Mode="In" Type="String" />
-      <Parameter Name="TeacherEmail" Mode="InOut" Type="String" />
+      <Parameter Name="TeacherSkype" Mode="InOut" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_authenticate">
       <Parameter Name="UEmail" Mode="In" Type="String" />

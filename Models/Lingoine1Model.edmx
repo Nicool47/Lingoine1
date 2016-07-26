@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LeapNullModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LeapNullModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="LanguageTable">
           <Key>
             <PropertyRef Name="Id" />
@@ -66,12 +66,12 @@
         <Function Name="Normal_UserAssign" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LearnerEmail" Type="varchar" Mode="In" />
           <Parameter Name="LName" Type="varchar" Mode="In" />
-          <Parameter Name="NTeacherEmail" Type="varchar" Mode="InOut" />
+          <Parameter Name="NTeacherSkype" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="sp_AssignTeacher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LearnerEmail" Type="varchar" Mode="In" />
           <Parameter Name="LName" Type="varchar" Mode="In" />
-          <Parameter Name="TeacherEmail" Type="varchar" Mode="InOut" />
+          <Parameter Name="TeacherSkype" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="sp_authenticate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UEmail" Type="varchar" Mode="In" />
@@ -108,8 +108,7 @@
             <End Role="UserLanguageTable" EntitySet="UserLanguageTable" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LeapNullModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -190,12 +189,12 @@
           <FunctionImport Name="Normal_UserAssign">
             <Parameter Name="LearnerEmail" Mode="In" Type="String" />
             <Parameter Name="LName" Mode="In" Type="String" />
-            <Parameter Name="NTeacherEmail" Mode="InOut" Type="String" />
+            <Parameter Name="NTeacherSkype" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_AssignTeacher">
             <Parameter Name="LearnerEmail" Mode="In" Type="String" />
             <Parameter Name="LName" Mode="In" Type="String" />
-            <Parameter Name="TeacherEmail" Mode="InOut" Type="String" />
+            <Parameter Name="TeacherSkype" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_authenticate">
             <Parameter Name="UEmail" Mode="In" Type="String" />
@@ -209,10 +208,10 @@
             <Parameter Name="URating" Mode="In" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="sp_SignIn">
-            <Parameter Name="UEmail" Mode="In" Type="String" />
+          <Parameter Name="UEmail" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_SignOut">
-            <Parameter Name="UEmail" Mode="In" Type="String" />
+          <Parameter Name="UEmail" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_StartCall">
             <Parameter Name="TeacherEmail" Mode="In" Type="String" />

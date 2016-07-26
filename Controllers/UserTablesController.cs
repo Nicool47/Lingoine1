@@ -10,31 +10,69 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Lingoine1.Models;
+using System.Data.Entity.Core.Objects;
 
 namespace Lingoine1.Controllers
 {
+    [RoutePrefix("api/UserTables")]
     public class UserTablesController : ApiController
     {
         private LeapNullEntities db = new LeapNullEntities();
 
+        [Route("")]
         // GET: api/UserTables
         public IQueryable<UserTable> GetUserTables()
         {
             return db.UserTables;
         }
 
-        // GET: api/UserTables/5
-        [ResponseType(typeof(UserTable))]
-        public async Task<IHttpActionResult> GetUserTable(string id)
+
+
+        //// GET: api/UserTables/5
+        //[ResponseType(typeof(UserTable))]
+        //public async Task<IHttpActionResult> GetUserTable(string id)
+        //{
+        //    UserTable userTable = await db.UserTables.FindAsync(id);
+        //    if (userTable == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(userTable);
+        //}
+
+        [Route("{email}/")]
+
+        public IQueryable<UserTable> GetUserByName(string email)
         {
-            UserTable userTable = await db.UserTables.FindAsync(id);
-            if (userTable == null)
+            return db.UserTables.Where(b => b.Email == email);
+        }
+
+        [Route("{learnerEmail}/{LanguageName}")]
+
+        public Object GetTeacherEmail(string learnerEmail, string LanguageName)
+        {
+            var teacherE=0;
+            using (var context = new LeapNullEntities())
             {
-                return NotFound();
+                ObjectParameter teacherEmail = new ObjectParameter("TeacherSkype", typeof(string));
+                try
+                {
+                    teacherE = context.sp_AssignTeacher(learnerEmail, LanguageName, teacherEmail);
+                    Console.WriteLine("TeacherE: "+teacherE);
+                }
+                catch (Exception es) {
+                    Console.WriteLine(es.StackTrace);
+                }
+
+                Console.WriteLine(teacherEmail);
+                return teacherEmail.Value;
             }
 
-            return Ok(userTable);
+            //return db.UserTables.Where(b => b.Email == email);
         }
+
+        [Route("{id}/")]
 
         // PUT: api/UserTables/5
         [ResponseType(typeof(void))]
@@ -73,6 +111,7 @@ namespace Lingoine1.Controllers
 
         // POST: api/UserTables
         [ResponseType(typeof(UserTable))]
+        [Route("")]
         public async Task<IHttpActionResult> PostUserTable(UserTable userTable)
         {
             if (!ModelState.IsValid)
@@ -101,6 +140,7 @@ namespace Lingoine1.Controllers
             return CreatedAtRoute("DefaultApi", new { id = userTable.Email }, userTable);
         }
 
+        [Route("{id}/")]
         // DELETE: api/UserTables/5
         [ResponseType(typeof(UserTable))]
         public async Task<IHttpActionResult> DeleteUserTable(string id)

@@ -23,6 +23,7 @@ namespace Lingoine1.Models
         }
 
         [Key]
+    
         public int Id { get; set; }
         public string LanguageName { get; set; }
     

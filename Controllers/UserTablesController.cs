@@ -11,6 +11,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Lingoine1.Models;
 using System.Data.Entity.Core.Objects;
+using System.Linq.Expressions;
+using Lingoine1.DTO;
 
 namespace Lingoine1.Controllers
 {
@@ -19,11 +21,29 @@ namespace Lingoine1.Controllers
     {
         private LeapNullEntities db = new LeapNullEntities();
 
+        
+private static readonly Expression<Func<UserTable, UserDTO>> AsUserDto =
+           x => new UserDTO
+           {
+               Username = x.Username,
+               DateOfBirth = x.DateOfBirth,
+               State = x.State,
+               Country = x.Country,
+               SkypeId = x.SkypeId,
+               Email = x.Email,
+               Password = x.Password,
+               IsBusy = x.IsBusy,
+               IsOnline = x.IsOnline,
+               IsPremium = x.IsPremium,
+               Gender = x.Gender
+           };
+
+
         [Route("")]
         // GET: api/UserTables
-        public IQueryable<UserTable> GetUserTables()
+        public IQueryable<UserDTO> GetUserTables()
         {
-            return db.UserTables;
+            return db.UserTables.Select(AsUserDto);
         }
 
 
@@ -43,13 +63,74 @@ namespace Lingoine1.Controllers
 
         [Route("{email}/")]
 
-        public IQueryable<UserTable> GetUserByName(string email)
+        public IQueryable<UserDTO> GetUserByName(string email)
         {
-            return db.UserTables.Where(b => b.Email == email);
+            return db.UserTables.Where(b => b.Email == email).Select(AsUserDto);
+        }
+
+        [Route("{email}/{isOnline}")]
+        public void GetUserStatus(string email, int isOnline)
+        {
+            using (var context = new LeapNullEntities())
+            {
+                var teacherE = 0;
+                try
+                {
+                    if (isOnline == 1)
+                    {                    
+                        teacherE = context.sp_SignIn(email);
+                    }
+                    else
+                    {                        
+                        teacherE = context.sp_SignOut(email);
+                    }
+                }
+                catch (Exception es)
+                {
+                    Console.WriteLine(es.StackTrace);
+                }
+            }
+
+        }
+
+
+        [Route("{t_email}/{l_email}/{l_name}")]
+        public void GetStartCall(string t_email, string l_email, string l_name)
+        {
+            using (var context = new LeapNullEntities())
+            {
+                var teacherE = 0;
+                try
+                {               
+                    teacherE = context.sp_StartCall(t_email, l_email, l_name);
+                }
+                catch (Exception es)
+                {
+                    Console.WriteLine(es.StackTrace);
+                }
+            }
+
+        }
+
+        [Route("{t_email}/{l_email}/{l_name}/{u_rating}")]
+        public void GetEndCall(string t_email, string l_email, string l_name, float u_rating)
+        {
+            using (var context = new LeapNullEntities())
+            {
+                var teacherE = 0;
+                try
+                {
+                    teacherE = context.sp_EndCall(t_email, l_email, l_name, u_rating);
+                }
+                catch (Exception es)
+                {
+                    Console.WriteLine(es.StackTrace);
+                }
+            }
+
         }
 
         [Route("{learnerEmail}/{LanguageName}/{premium}")]
-
         public Object GetTeacherEmail(string learnerEmail, string LanguageName, int premium)
         {
             var teacherE=0;
@@ -79,6 +160,9 @@ namespace Lingoine1.Controllers
 
             //return db.UserTables.Where(b => b.Email == email);
         }
+
+
+
 
         [Route("{id}/")]
 

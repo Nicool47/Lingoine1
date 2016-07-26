@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Lingoine1.Models;
+using System.Linq.Expressions;
+using Lingoine1.DTO;
 
 namespace Lingoine1.Controllers
 {
@@ -17,24 +19,37 @@ namespace Lingoine1.Controllers
     {
         private LeapNullEntities db = new LeapNullEntities();
 
+        private static readonly Expression<Func<UserLanguageTable, UserLanguageDTO>> AsUserLanguageDto =
+         x => new UserLanguageDTO {
+             LanguageId = x.LanguageId,
+             NumOfCalls = x.NumOfCalls,
+             ProficiencyLevel = x.ProficiencyLevel,
+             UserEmailId = x.UserEmailId,
+             Rating = x.Rating
+         };
+
+
         // GET: api/UserLanguageTables
-        public IQueryable<UserLanguageTable> GetUserLanguageTables()
+        public IQueryable<UserLanguageDTO> GetUserLanguageTables()
         {
-            return db.UserLanguageTables;
+            return db.UserLanguageTables.Select(AsUserLanguageDto);
         }
 
         // GET: api/UserLanguageTables/5
-        [ResponseType(typeof(UserLanguageTable))]
-        public async Task<IHttpActionResult> GetUserLanguageTable(string id)
+        [Route("{id}")]
+        [ResponseType(typeof(UserLanguageDTO))]
+        public async Task<IHttpActionResult> GetUserLanguage(string id)
         {
-            UserLanguageTable userLanguageTable = await db.UserLanguageTables.FindAsync(id);
-            if (userLanguageTable == null)
+           UserLanguageDTO user =  await db.UserLanguageTables.Where(b => b.UserEmailId == id)
+                .Select(AsUserLanguageDto).FirstOrDefaultAsync();
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return Ok(userLanguageTable);
+            return Ok(user);
         }
+
 
         // PUT: api/UserLanguageTables/5
         [ResponseType(typeof(void))]

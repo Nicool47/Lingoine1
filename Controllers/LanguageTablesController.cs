@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Lingoine1.Models;
+using System.Linq.Expressions;
+using Lingoine1.DTO;
 
 namespace Lingoine1.Controllers
 {
@@ -17,10 +19,18 @@ namespace Lingoine1.Controllers
     {
         private LeapNullEntities db = new LeapNullEntities();
 
+        private static readonly Expression<Func<LanguageTable, LanguageDTO>> AsLanguageDto =
+           x => new LanguageDTO
+           {
+               Id = x.Id,
+               LanguageName = x.LanguageName
+
+           };
+
         // GET: api/LanguageTables
-        public IQueryable<LanguageTable> GetLanguageTables()
+        public IQueryable<LanguageDTO> GetLanguageTables()
         {
-            return db.LanguageTables;
+            return db.LanguageTables.Select(AsLanguageDto);
         }
 
         // GET: api/LanguageTables/5
@@ -35,6 +45,7 @@ namespace Lingoine1.Controllers
 
             return Ok(languageTable);
         }
+
 
         // PUT: api/LanguageTables/5
         [ResponseType(typeof(void))]

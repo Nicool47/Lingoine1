@@ -241,6 +241,9 @@
     <Compile Include="Controllers\UserLanguageTablesController.cs" />
     <Compile Include="Controllers\UserTablesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DTO\LanguageDTO.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="DTO\UserLanguageDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

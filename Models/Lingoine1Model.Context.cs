@@ -31,7 +31,7 @@ namespace Lingoine1.Models
         public virtual DbSet<UserLanguageTable> UserLanguageTables { get; set; }
         public virtual DbSet<UserTable> UserTables { get; set; }
     
-        public virtual int Normal_UserAssign(string learnerEmail, string lName, ObjectParameter nTeacherSkype)
+        public virtual int Normal_UserAssign(string learnerEmail, string lName, ObjectParameter nTeacherSkype, ObjectParameter nTeacherEmail)
         {
             var learnerEmailParameter = learnerEmail != null ?
                 new ObjectParameter("LearnerEmail", learnerEmail) :
@@ -41,10 +41,10 @@ namespace Lingoine1.Models
                 new ObjectParameter("LName", lName) :
                 new ObjectParameter("LName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Normal_UserAssign", learnerEmailParameter, lNameParameter, nTeacherSkype);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Normal_UserAssign", learnerEmailParameter, lNameParameter, nTeacherSkype, nTeacherEmail);
         }
     
-        public virtual int sp_AssignTeacher(string learnerEmail, string lName, ObjectParameter teacherSkype)
+        public virtual int sp_AssignTeacher(string learnerEmail, string lName, ObjectParameter teacherSkype, ObjectParameter teacherEmail)
         {
             var learnerEmailParameter = learnerEmail != null ?
                 new ObjectParameter("LearnerEmail", learnerEmail) :
@@ -54,7 +54,7 @@ namespace Lingoine1.Models
                 new ObjectParameter("LName", lName) :
                 new ObjectParameter("LName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_AssignTeacher", learnerEmailParameter, lNameParameter, teacherSkype);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_AssignTeacher", learnerEmailParameter, lNameParameter, teacherSkype, teacherEmail);
         }
     
         public virtual int sp_authenticate(string uEmail, string uPassword, ObjectParameter result)

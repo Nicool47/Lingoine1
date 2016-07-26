@@ -130,22 +130,26 @@ private static readonly Expression<Func<UserTable, UserDTO>> AsUserDto =
 
         }
 
-        [Route("{learnerEmail}/{LanguageName}/{premium}")]
+        [Route("getSkypeInfo/{learnerEmail}/{LanguageName}/{premium}")]
         public Object GetTeacherEmail(string learnerEmail, string LanguageName, int premium)
         {
             var teacherE=0;
             using (var context = new LeapNullEntities())
             {
+                ObjectParameter teacherSkypeId = null;
                 ObjectParameter teacherEmail = null;
+
                 try
                 {
                     if(premium == 1)
                     {
-                        teacherEmail = new ObjectParameter("TeacherSkype", typeof(string));
-                        teacherE = context.sp_AssignTeacher(learnerEmail, LanguageName, teacherEmail);
+                        teacherSkypeId = new ObjectParameter("TeacherSkype", typeof(string));
+                        teacherEmail = new ObjectParameter("TeacherEmail", typeof(string));
+                        teacherE = context.sp_AssignTeacher(learnerEmail, LanguageName, teacherSkypeId, teacherEmail);
                     }else {
-                        teacherEmail = new ObjectParameter("NTeacherSkype", typeof(string));
-                        teacherE = context.Normal_UserAssign(learnerEmail, LanguageName, teacherEmail);
+                        teacherSkypeId = new ObjectParameter("NTeacherSkype", typeof(string));
+                        teacherEmail = new ObjectParameter("NTeacherEmail", typeof(string));
+                        teacherE = context.Normal_UserAssign(learnerEmail, LanguageName, teacherSkypeId, teacherEmail);
                     }
                     
                     Console.WriteLine("TeacherE: "+teacherE);
@@ -155,7 +159,7 @@ private static readonly Expression<Func<UserTable, UserDTO>> AsUserDto =
                 }
 
                 Console.WriteLine(teacherEmail);
-                return teacherEmail.Value;
+                return teacherSkypeId.Value+","+teacherEmail.Value;
             }
 
             //return db.UserTables.Where(b => b.Email == email);

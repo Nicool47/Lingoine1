@@ -11,8 +11,6 @@ namespace Lingoine1.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
     
     public partial class UserTable
     {
@@ -26,7 +24,6 @@ namespace Lingoine1.Models
         public System.DateTime DateOfBirth { get; set; }
         public string State { get; set; }
         public string Country { get; set; }
-        [Key]
         public string Email { get; set; }
         public string Password { get; set; }
         public string SkypeId { get; set; }

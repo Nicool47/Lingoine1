@@ -40,7 +40,7 @@ namespace Lingoine1.Controllers
         [ResponseType(typeof(UserLanguageDTO))]
         public async Task<IHttpActionResult> GetUserLanguage(string id)
         {
-           UserLanguageDTO user =  await db.UserLanguageTables.Where(b => b.UserEmailId == id)
+           UserLanguageDTO user =  await db.UserLanguageTables.Include(b => b.LanguageId).Where(b => b.UserEmailId == id)
                 .Select(AsUserLanguageDto).FirstOrDefaultAsync();
             if (user == null)
             {

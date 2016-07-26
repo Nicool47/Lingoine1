@@ -67,11 +67,13 @@
           <Parameter Name="LearnerEmail" Type="varchar" Mode="In" />
           <Parameter Name="LName" Type="varchar" Mode="In" />
           <Parameter Name="NTeacherSkype" Type="varchar" Mode="InOut" />
+          <Parameter Name="NTeacherEmail" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="sp_AssignTeacher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LearnerEmail" Type="varchar" Mode="In" />
           <Parameter Name="LName" Type="varchar" Mode="In" />
           <Parameter Name="TeacherSkype" Type="varchar" Mode="InOut" />
+          <Parameter Name="TeacherEmail" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="sp_authenticate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UEmail" Type="varchar" Mode="In" />
@@ -190,11 +192,13 @@
             <Parameter Name="LearnerEmail" Mode="In" Type="String" />
             <Parameter Name="LName" Mode="In" Type="String" />
             <Parameter Name="NTeacherSkype" Mode="InOut" Type="String" />
+            <Parameter Name="NTeacherEmail" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_AssignTeacher">
             <Parameter Name="LearnerEmail" Mode="In" Type="String" />
             <Parameter Name="LName" Mode="In" Type="String" />
             <Parameter Name="TeacherSkype" Mode="InOut" Type="String" />
+            <Parameter Name="TeacherEmail" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_authenticate">
             <Parameter Name="UEmail" Mode="In" Type="String" />

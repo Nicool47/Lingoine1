@@ -11,14 +11,10 @@ namespace Lingoine1.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class UserLanguageTable
     {
-        [Key, ForeignKey("UserTable"), Column(Order = 1)]
         public string UserEmailId { get; set; }
-        [Key, ForeignKey("LanguageTable"), Column(Order = 2)]
         public int LanguageId { get; set; }
         public int ProficiencyLevel { get; set; }
         public double Rating { get; set; }

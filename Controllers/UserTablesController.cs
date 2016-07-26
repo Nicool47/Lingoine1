@@ -48,17 +48,25 @@ namespace Lingoine1.Controllers
             return db.UserTables.Where(b => b.Email == email);
         }
 
-        [Route("{learnerEmail}/{LanguageName}")]
+        [Route("{learnerEmail}/{LanguageName}/{premium}")]
 
-        public Object GetTeacherEmail(string learnerEmail, string LanguageName)
+        public Object GetTeacherEmail(string learnerEmail, string LanguageName, int premium)
         {
             var teacherE=0;
             using (var context = new LeapNullEntities())
             {
-                ObjectParameter teacherEmail = new ObjectParameter("TeacherSkype", typeof(string));
+                ObjectParameter teacherEmail = null;
                 try
                 {
-                    teacherE = context.sp_AssignTeacher(learnerEmail, LanguageName, teacherEmail);
+                    if(premium == 1)
+                    {
+                        teacherEmail = new ObjectParameter("TeacherSkype", typeof(string));
+                        teacherE = context.sp_AssignTeacher(learnerEmail, LanguageName, teacherEmail);
+                    }else {
+                        teacherEmail = new ObjectParameter("NTeacherSkype", typeof(string));
+                        teacherE = context.Normal_UserAssign(learnerEmail, LanguageName, teacherEmail);
+                    }
+                    
                     Console.WriteLine("TeacherE: "+teacherE);
                 }
                 catch (Exception es) {
